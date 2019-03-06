@@ -29,10 +29,10 @@ var library = {
 // p01: Coding Music - 2 tracks
 // p02: Other Playlist - 1 tracks
 
-var printPlaylists = function () {
-  for (var id in library.playlists) {
-    var playlistName = library.playlists[id].name;
-    var numberOfTracks = library.playlists[id].tracks.length;
+printPlaylists = function () {
+  for (var id in this.playlists) {
+    var playlistName = this.playlists[id].name;
+    var numberOfTracks = this.playlists[id].tracks.length;
     return (id + ": " + playlistName + " - " + numberOfTracks + " tracks");
   }
 }
@@ -42,12 +42,12 @@ var printPlaylists = function () {
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 // t03: Four Thirty-Three by John Cage (Woodstock 1952)
 
-var printTracks = function () {
-  for (var id in library.tracks) {
-    var trackID = library.tracks[id].id;
-    var trackName = library.tracks[id].name;
-    var trackArtist = library.tracks[id].artist;
-    var trackAlbum = library.tracks[id].album;
+printTracks = function () {
+  for (var id in this.tracks) {
+    var trackID = this.tracks[id].id;
+    var trackName = this.tracks[id].name;
+    var trackArtist = this.tracks[id].artist;
+    var trackAlbum = this.tracks[id].album;
     return (trackID + ": " + trackName + "by" + trackArtist + "(" + trackAlbum + ")");
   }
 }
@@ -57,24 +57,24 @@ var printTracks = function () {
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 
-var printPlaylist = function (playlistId) {
-  var playlistName = library.playlists[playlistId].name;
-  var numberOfTracks = library.playlists[playlistId].tracks.length;
+printPlaylist = function (playlistId) {
+  var playlistName = this.playlists[playlistId].name;
+  var numberOfTracks = this.playlists[playlistId].tracks.length;
   console.log(playlistId + ": " + playlistName + " - " + numberOfTracks + " tracks");
-  var tracklist = library.playlists[playlistId].tracks;
+  var tracklist = this.playlists[playlistId].tracks;
   for (i = 0; i < tracklist.length; i++) {
-    var trackID = library.tracks[tracklist[i]].id;
-    var trackName = library.tracks[tracklist[i]].name;
-    var trackArtist = library.tracks[tracklist[i]].artist;
-    var trackAlbum = library.tracks[tracklist[i]].album;
+    var trackID = this.tracks[tracklist[i]].id;
+    var trackName = this.tracks[tracklist[i]].name;
+    var trackArtist = this.tracks[tracklist[i]].artist;
+    var trackAlbum = this.tracks[tracklist[i]].album;
     return (trackID + ": " + trackName + " by " + trackArtist + " (" + trackAlbum + ")");
   }
 }
 
 // adds an existing track to an existing playlist
 
-var addTrackToPlaylist = function (trackId, playlistId) {
-  var arrOfTracks = library.playlists[playlistId].tracks;
+addTrackToPlaylist = function (trackId, playlistId) {
+  var arrOfTracks = this.playlists[playlistId].tracks;
   for (i = 0; i < arrOfTracks.length; i++) {
     if (trackId === arrOfTracks[i]) {
       return ("this track already exists in this playlist");
@@ -95,26 +95,26 @@ var uid = function() {
 
 // adds a track to the library
 
-var addTrack = function (name, artist, album) {
+addTrack = function (name, artist, album) {
   //in other words, adding a new track to library.tracks (assuming it doesn't already exist, i'm not checking for that)
   let newId = uid();
-  library.tracks[newId] = {};
-  library.tracks[newId].id = newId;
-  library.tracks[newId].name = name;
-  library.tracks[newId].artist = artist;
-  library.tracks[newId].album = album;
+  this.tracks[newId] = {};
+  this.tracks[newId].id = newId;
+  this.tracks[newId].name = name;
+  this.tracks[newId].artist = artist;
+  this.tracks[newId].album = album;
   console.log(library.tracks);
 }
 // console.log(addTrack("Hello", "Adele", "Twenty-Five"));
 
 // adds a playlist to the library
 
-var addPlaylist = function (name) {
+addPlaylist = function (name) {
   let newId = uid();
-  library.playlists[newId] = {};
-  library.playlists[newId].id = newId;
-  library.playlists[newId].name = name;
-  library.playlists[newId].tracks = [];
+  this.playlists[newId] = {};
+  this.playlists[newId].id = newId;
+  this.playlists[newId].name = name;
+  this.playlists[newId].tracks = [];
   return library.playlists;
 }
 
@@ -126,12 +126,12 @@ var addPlaylist = function (name) {
 // tip: use "string".search("tri")
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
 
-var printSearchResults = function(query) {
+printSearchResults = function(query) {
   let newList = [];
-  for (var track in library.tracks){
-    if (library.tracks[track].name.includes(query) ||
-        library.tracks[track].artist.includes(query) ||
-        library.tracks[track].album.includes(query)) {
+  for (var track in this.tracks){
+    if (this.tracks[track].name.includes(query) ||
+        this.tracks[track].artist.includes(query) ||
+        this.tracks[track].album.includes(query)) {
       newList.push(track);
     }
   } return newList;
