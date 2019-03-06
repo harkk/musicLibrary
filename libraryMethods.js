@@ -20,8 +20,8 @@ var library = {
                       name: "Other Playlist",
                       tracks: ["t03"]
                     }
-             }
-}
+             },
+
 
 // FUNCTIONS TO IMPLEMENT:
 
@@ -29,20 +29,20 @@ var library = {
 // p01: Coding Music - 2 tracks
 // p02: Other Playlist - 1 tracks
 
-printPlaylists = function () {
+printPlaylists: function () {
   for (var id in this.playlists) {
     var playlistName = this.playlists[id].name;
     var numberOfTracks = this.playlists[id].tracks.length;
     return (id + ": " + playlistName + " - " + numberOfTracks + " tracks");
   }
-}
-
+},
+// console.log(printPlaylists());
 // prints a list of all tracks, in the form:
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 // t03: Four Thirty-Three by John Cage (Woodstock 1952)
 
-printTracks = function () {
+printTracks: function () {
   for (var id in this.tracks) {
     var trackID = this.tracks[id].id;
     var trackName = this.tracks[id].name;
@@ -50,14 +50,14 @@ printTracks = function () {
     var trackAlbum = this.tracks[id].album;
     return (trackID + ": " + trackName + "by" + trackArtist + "(" + trackAlbum + ")");
   }
-}
+},
 
 // prints a list of tracks for a given playlist, in the form:
 // p01: Coding Music - 2 tracks
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 
-printPlaylist = function (playlistId) {
+printPlaylist: function (playlistId) {
   var playlistName = this.playlists[playlistId].name;
   var numberOfTracks = this.playlists[playlistId].tracks.length;
   console.log(playlistId + ": " + playlistName + " - " + numberOfTracks + " tracks");
@@ -69,11 +69,11 @@ printPlaylist = function (playlistId) {
     var trackAlbum = this.tracks[tracklist[i]].album;
     return (trackID + ": " + trackName + " by " + trackArtist + " (" + trackAlbum + ")");
   }
-}
+},
 
 // adds an existing track to an existing playlist
 
-addTrackToPlaylist = function (trackId, playlistId) {
+addTrackToPlaylist: function (trackId, playlistId) {
   var arrOfTracks = this.playlists[playlistId].tracks;
   for (i = 0; i < arrOfTracks.length; i++) {
     if (trackId === arrOfTracks[i]) {
@@ -82,41 +82,41 @@ addTrackToPlaylist = function (trackId, playlistId) {
   }
   arrOfTracks.push(trackId);
   return arrOfTracks;
-}
+},
 
 // console.log(addTrackToPlaylist("t02", "p02"));
 
 // generates a unique id
 // (use this for addTrack and addPlaylist)
 
-var uid = function() {
+uid: function() {
   return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-}
+},
 
 // adds a track to the library
 
-addTrack = function (name, artist, album) {
+addTrack: function (name, artist, album) {
   //in other words, adding a new track to library.tracks (assuming it doesn't already exist, i'm not checking for that)
-  let newId = uid();
+  let newId = this.uid();
   this.tracks[newId] = {};
   this.tracks[newId].id = newId;
   this.tracks[newId].name = name;
   this.tracks[newId].artist = artist;
   this.tracks[newId].album = album;
-  console.log(library.tracks);
-}
+  return library.tracks;
+},
 // console.log(addTrack("Hello", "Adele", "Twenty-Five"));
 
 // adds a playlist to the library
 
-addPlaylist = function (name) {
-  let newId = uid();
+addPlaylist: function (name) {
+  let newId = this.uid();
   this.playlists[newId] = {};
   this.playlists[newId].id = newId;
   this.playlists[newId].name = name;
   this.playlists[newId].tracks = [];
-  return library.playlists;
-}
+  return this.playlists;
+},
 
 // console.log(addPlaylist("Bosco be trippin"));
 
@@ -126,7 +126,7 @@ addPlaylist = function (name) {
 // tip: use "string".search("tri")
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
 
-printSearchResults = function(query) {
+printSearchResults: function(query) {
   let newList = [];
   for (var track in this.tracks){
     if (this.tracks[track].name.includes(query) ||
@@ -136,5 +136,18 @@ printSearchResults = function(query) {
     }
   } return newList;
 }
+};
 
-console.log(printSearchResults("zz"));
+console.log(library.printPlaylists());
+console.log("--------------------------------- \n")
+console.log(library.printTracks());
+console.log("--------------------------------- \n")
+console.log(library.printPlaylist('p02'));
+console.log("--------------------------------- \n")
+console.log(library.addTrackToPlaylist('t03', 'p01'));
+console.log("--------------------------------- \n")
+console.log(library.addTrack('Reckoner', 'Radiohead', 'In Rainbows'));
+console.log("--------------------------------- \n")
+console.log(library.addPlaylist('Harks Music'));
+console.log("--------------------------------- \n")
+console.log(library.printSearchResults('eck'));
